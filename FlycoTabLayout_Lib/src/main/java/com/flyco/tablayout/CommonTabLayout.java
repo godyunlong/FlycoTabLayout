@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -205,8 +206,8 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
     }
 
     /** 关联数据支持同时切换fragments */
-    public void setTabData(ArrayList<CustomTabEntity> tabEntitys, FragmentActivity fa, int containerViewId, ArrayList<Fragment> fragments) {
-        mFragmentChangeManager = new FragmentChangeManager(fa.getSupportFragmentManager(), containerViewId, fragments);
+    public void setTabData(ArrayList<CustomTabEntity> tabEntitys, FragmentManager manager, int containerViewId, ArrayList<Fragment> fragments) {
+        mFragmentChangeManager = new FragmentChangeManager(manager, containerViewId, fragments);
         setTabData(tabEntitys);
     }
 

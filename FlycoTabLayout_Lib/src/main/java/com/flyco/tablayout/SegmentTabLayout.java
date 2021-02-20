@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.flyco.tablayout.utils.FragmentChangeManager;
@@ -174,8 +175,8 @@ public class SegmentTabLayout extends FrameLayout implements ValueAnimator.Anima
     }
 
     /** 关联数据支持同时切换fragments */
-    public void setTabData(String[] titles, FragmentActivity fa, int containerViewId, ArrayList<Fragment> fragments) {
-        mFragmentChangeManager = new FragmentChangeManager(fa.getSupportFragmentManager(), containerViewId, fragments);
+    public void setTabData(String[] titles, FragmentManager fa, int containerViewId, ArrayList<Fragment> fragments) {
+        mFragmentChangeManager = new FragmentChangeManager(fa, containerViewId, fragments);
         setTabData(titles);
     }
 
