@@ -414,7 +414,12 @@ public class SegmentTabLayout extends FrameLayout implements ValueAnimator.Anima
             mFragmentChangeManager.setFragments(currentTab);
         }
         if (mIndicatorAnimEnable) {
-            calcOffset();
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    calcOffset();
+                }
+            },100);
         } else {
             invalidate();
         }

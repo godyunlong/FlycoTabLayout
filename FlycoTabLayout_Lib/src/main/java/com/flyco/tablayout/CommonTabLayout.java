@@ -390,6 +390,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         invalidate();
     }
 
+    private boolean mIsFirstDraw = true;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -422,7 +423,15 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         }
 
         //draw indicator line
-        calcIndicatorRect();
+        if (mIndicatorAnimEnable) {
+            if (mIsFirstDraw) {
+                mIsFirstDraw = false;
+                calcIndicatorRect();
+            }
+        } else {
+            calcIndicatorRect();
+        }
+
         if (mIndicatorStyle == STYLE_TRIANGLE) {
             if (mIndicatorHeight > 0) {
                 mTrianglePaint.setColor(mIndicatorColor);
@@ -486,7 +495,12 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
             mFragmentChangeManager.setFragments(currentTab);
         }
         if (mIndicatorAnimEnable) {
-            calcOffset();
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    calcOffset();
+                }
+            },100);
         } else {
             invalidate();
         }
