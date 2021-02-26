@@ -390,7 +390,6 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         invalidate();
     }
 
-    private boolean mIsFirstDraw = true;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -423,16 +422,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         }
 
         //draw indicator line
-        if (mIndicatorAnimEnable) {
-            if (mIsFirstDraw) {
-                mIsFirstDraw = false;
-                calcIndicatorRect();
-            }
-        } else {
-            calcIndicatorRect();
-        }
-
-
+        calcIndicatorRect();
         if (mIndicatorStyle == STYLE_TRIANGLE) {
             if (mIndicatorHeight > 0) {
                 mTrianglePaint.setColor(mIndicatorColor);
