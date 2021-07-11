@@ -72,7 +72,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private float mIndicatorMarginTop;
     private float mIndicatorMarginRight;
     private float mIndicatorMarginBottom;
-    private float mIndicatorRadius;
     private int mIndicatorGravity;
     private boolean mIndicatorWidthEqualTitle;
 
@@ -80,6 +79,8 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private int mUnderlineColor;
     private float mUnderlineHeight;
     private int mUnderlineGravity;
+    private float mUnderlineRadius;
+
 
     /** divider */
     private int mDividerColor;
@@ -150,7 +151,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         mIndicatorMarginBottom = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_bottom, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
         mIndicatorGravity = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_gravity, Gravity.BOTTOM);
         mIndicatorWidthEqualTitle = ta.getBoolean(R.styleable.SlidingTabLayout_tl_indicator_width_equal_title, false);
-        mIndicatorRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_radius, 0);
+        mUnderlineRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_radius, 0);
 
         mUnderlineColor = ta.getColor(R.styleable.SlidingTabLayout_tl_underline_color, Color.parseColor("#ffffff"));
         mUnderlineHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_height, dp2px(0));
@@ -475,7 +476,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             } else {
                 rectF = new RectF(paddingLeft, 0, mTabsContainer.getWidth() + paddingLeft, mUnderlineHeight);
             }
-            canvas.drawRoundRect(rectF,mIndicatorRadius,mIndicatorRadius, mRectPaint);
+            canvas.drawRoundRect(rectF,mUnderlineRadius,mUnderlineRadius, mRectPaint);
         }
 
         //draw indicator line
