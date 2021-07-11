@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -42,7 +43,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private LinearLayout mTabsContainer;
     private int mCurrentTab;
     private float mCurrentPositionOffset;
-    private int mTabCount;
+    protected int mTabCount;
     /** 用于绘制显示器 */
     private Rect mIndicatorRect = new Rect();
     /** 用于实现滚动居中 */
@@ -59,7 +60,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private int mIndicatorStyle = STYLE_NORMAL;
 
     private float mTabPadding;
-    private boolean mTabSpaceEqual;
+    protected boolean mTabSpaceEqual;
     private float mTabWidth;
 
     /** indicator */
@@ -71,6 +72,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private float mIndicatorMarginTop;
     private float mIndicatorMarginRight;
     private float mIndicatorMarginBottom;
+    private float mIndicatorRadius;
     private int mIndicatorGravity;
     private boolean mIndicatorWidthEqualTitle;
 
@@ -148,6 +150,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         mIndicatorMarginBottom = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_bottom, dp2px(mIndicatorStyle == STYLE_BLOCK ? 7 : 0));
         mIndicatorGravity = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_gravity, Gravity.BOTTOM);
         mIndicatorWidthEqualTitle = ta.getBoolean(R.styleable.SlidingTabLayout_tl_indicator_width_equal_title, false);
+        mIndicatorRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_radius, 0);
 
         mUnderlineColor = ta.getColor(R.styleable.SlidingTabLayout_tl_underline_color, Color.parseColor("#ffffff"));
         mUnderlineHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_height, dp2px(0));
@@ -284,14 +287,20 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         });
 
         /** 每一个Tab的布局参数 */
-        LinearLayout.LayoutParams lp_tab = mTabSpaceEqual ?
-                new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f) :
-                new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp_tab = getItemLayoutParams(position);
         if (mTabWidth > 0) {
             lp_tab = new LinearLayout.LayoutParams((int) mTabWidth, LayoutParams.MATCH_PARENT);
         }
 
         mTabsContainer.addView(tabView, position, lp_tab);
+    }
+
+
+    public LinearLayout.LayoutParams getItemLayoutParams(int position){
+        LinearLayout.LayoutParams lp_tab = mTabSpaceEqual ?
+                new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f) :
+                new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        return lp_tab;
     }
 
     private void updateTabStyles() {
@@ -460,11 +469,13 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         // draw underline
         if (mUnderlineHeight > 0) {
             mRectPaint.setColor(mUnderlineColor);
+            RectF rectF = null;
             if (mUnderlineGravity == Gravity.BOTTOM) {
-                canvas.drawRect(paddingLeft, height - mUnderlineHeight, mTabsContainer.getWidth() + paddingLeft, height, mRectPaint);
+                rectF = new RectF(paddingLeft, height - mUnderlineHeight, mTabsContainer.getWidth() + paddingLeft, height);
             } else {
-                canvas.drawRect(paddingLeft, 0, mTabsContainer.getWidth() + paddingLeft, mUnderlineHeight, mRectPaint);
+                rectF = new RectF(paddingLeft, 0, mTabsContainer.getWidth() + paddingLeft, mUnderlineHeight);
             }
+            canvas.drawRoundRect(rectF,mIndicatorRadius,mIndicatorRadius, mRectPaint);
         }
 
         //draw indicator line
@@ -483,10 +494,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         } else if (mIndicatorStyle == STYLE_BLOCK) {
             if (mIndicatorHeight < 0) {
                 mIndicatorHeight = height - mIndicatorMarginTop - mIndicatorMarginBottom;
-            } else {
-
             }
-
             if (mIndicatorHeight > 0) {
                 if (mIndicatorCornerRadius < 0 || mIndicatorCornerRadius > mIndicatorHeight / 2) {
                     mIndicatorCornerRadius = mIndicatorHeight / 2;

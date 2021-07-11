@@ -12,6 +12,7 @@
     <attr name="tl_indicator_margin_top" format="dimension"/>
     <attr name="tl_indicator_margin_right" format="dimension"/>
     <attr name="tl_indicator_margin_bottom" format="dimension"/>
+    <attr name="tl_indicator_radius" format="dimension"/>
     <!-- 设置显示器圆角弧度-->
     <attr name="tl_indicator_corner_radius" format="dimension"/>
     <!-- 设置显示器上方还是下方,只对圆角矩形有用-->
@@ -91,6 +92,7 @@
         <attr name="tl_indicator_gravity"/>
         <attr name="tl_indicator_style"/>
         <attr name="tl_indicator_width_equal_title"/>
+        <attr name="tl_indicator_radius"/>
 
         <!-- underline -->
         <attr name="tl_underline_color"/>
@@ -186,6 +188,7 @@
         <attr name="tl_indicator_corner_radius"/>
         <attr name="tl_indicator_anim_enable"/>
         <attr name="tl_indicator_anim_duration"/>
+        <attr name="tl_indicator_radius"/>
         <attr name="tl_indicator_bounce_enable"/>
 
         <!-- divider -->
