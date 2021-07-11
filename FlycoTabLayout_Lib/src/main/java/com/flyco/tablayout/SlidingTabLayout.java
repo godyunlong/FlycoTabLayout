@@ -80,6 +80,8 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     private float mUnderlineHeight;
     private int mUnderlineGravity;
     private float mUnderlineRadius;
+    private float mUnderlineMarginLeft;
+    private float mUnderlineMarginRight;
 
 
     /** divider */
@@ -152,6 +154,8 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         mIndicatorGravity = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_gravity, Gravity.BOTTOM);
         mIndicatorWidthEqualTitle = ta.getBoolean(R.styleable.SlidingTabLayout_tl_indicator_width_equal_title, false);
         mUnderlineRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_radius, 0);
+        mUnderlineMarginLeft = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_margin_left, 0);
+        mUnderlineMarginRight = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_margin_right, 0);
 
         mUnderlineColor = ta.getColor(R.styleable.SlidingTabLayout_tl_underline_color, Color.parseColor("#ffffff"));
         mUnderlineHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_underline_height, dp2px(0));
@@ -471,10 +475,12 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (mUnderlineHeight > 0) {
             mRectPaint.setColor(mUnderlineColor);
             RectF rectF = null;
+            float left = paddingLeft+mUnderlineMarginLeft;
+            float right = mTabsContainer.getWidth() + paddingLeft-mUnderlineMarginRight;
             if (mUnderlineGravity == Gravity.BOTTOM) {
-                rectF = new RectF(paddingLeft, height - mUnderlineHeight, mTabsContainer.getWidth() + paddingLeft, height);
+                rectF = new RectF(left, height - mUnderlineHeight, right, height);
             } else {
-                rectF = new RectF(paddingLeft, 0, mTabsContainer.getWidth() + paddingLeft, mUnderlineHeight);
+                rectF = new RectF(left, 0, right, mUnderlineHeight);
             }
             canvas.drawRoundRect(rectF,mUnderlineRadius,mUnderlineRadius, mRectPaint);
         }
