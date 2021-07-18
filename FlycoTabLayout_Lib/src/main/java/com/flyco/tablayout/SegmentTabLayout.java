@@ -206,11 +206,11 @@ public class SegmentTabLayout extends FrameLayout implements ValueAnimator.Anima
                 if (mCurrentTab != position) {
                     setCurrentTab(position);
                     if (mListener != null) {
-                        mListener.onTabSelect(position,tabView);
+                        mListener.onTabSelect(position);
                     }
                 } else {
                     if (mListener != null) {
-                        mListener.onTabReselect(position,tabView);
+                        mListener.onTabReselect(position);
                     }
                 }
             }

@@ -275,8 +275,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 if (position != -1) {
                     if (mViewPager == null ){
                         if (mListener != null) {
-                            mListener.onTabSelect(position,v);
+                            mListener.onTabSelect(position);
                         }
+                        invalidate();
                     } else if (mViewPager.getCurrentItem() != position) {
                         if (mSnapOnTabClick) {
                             mViewPager.setCurrentItem(position, false);
@@ -285,11 +286,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                         }
 
                         if (mListener != null) {
-                            mListener.onTabSelect(position,v);
+                            mListener.onTabSelect(position);
                         }
                     } else {
                         if (mListener != null) {
-                            mListener.onTabReselect(position,v);
+                            mListener.onTabReselect(position);
                         }
                     }
                 }
