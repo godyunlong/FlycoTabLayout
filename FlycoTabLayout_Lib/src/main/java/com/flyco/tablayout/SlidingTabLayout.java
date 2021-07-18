@@ -247,17 +247,18 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         updateTabStyles();
     }
 
-    public void addNewTab(String title) {
+    public View addNewTab(String title) {
         View tabView = View.inflate(mContext, R.layout.layout_tab, null);
-        if (mTitles != null) {
-            mTitles.add(title);
+        if (mTitles == null) {
+            mTitles = new ArrayList<>();
         }
-
+        mTitles.add(title);
         CharSequence pageTitle = mTitles == null ? mViewPager.getAdapter().getPageTitle(mTabCount) : mTitles.get(mTabCount);
         addTab(mTabCount, pageTitle.toString(), tabView);
         this.mTabCount = mTitles == null ? mViewPager.getAdapter().getCount() : mTitles.size();
 
         updateTabStyles();
+        return tabView;
     }
 
     /** 创建并添加tab */
@@ -272,7 +273,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             public void onClick(View v) {
                 int position = mTabsContainer.indexOfChild(v);
                 if (position != -1) {
-                    if (mViewPager.getCurrentItem() != position) {
+                    if (mViewPager == null ){
+                        if (mListener != null) {
+                            mListener.onTabSelect(position,v);
+                        }
+                    } else if (mViewPager.getCurrentItem() != position) {
                         if (mSnapOnTabClick) {
                             mViewPager.setCurrentItem(position, false);
                         } else {
@@ -280,11 +285,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                         }
 
                         if (mListener != null) {
-                            mListener.onTabSelect(position);
+                            mListener.onTabSelect(position,v);
                         }
                     } else {
                         if (mListener != null) {
-                            mListener.onTabReselect(position);
+                            mListener.onTabReselect(position,v);
                         }
                     }
                 }
@@ -543,12 +548,14 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     //setter and getter
     public void setCurrentTab(int currentTab) {
         this.mCurrentTab = currentTab;
+        if (mViewPager != null)
         mViewPager.setCurrentItem(currentTab);
 
     }
 
     public void setCurrentTab(int currentTab, boolean smoothScroll) {
         this.mCurrentTab = currentTab;
+        if (mViewPager != null)
         mViewPager.setCurrentItem(currentTab, smoothScroll);
     }
 

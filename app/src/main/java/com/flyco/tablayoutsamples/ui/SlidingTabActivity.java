@@ -108,13 +108,14 @@ public class SlidingTabActivity extends AppCompatActivity implements OnTabSelect
 //        });
     }
 
+
     @Override
-    public void onTabSelect(int position) {
+    public void onTabSelect(int position, View view) {
         Toast.makeText(mContext, "onTabSelect&position--->" + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onTabReselect(int position) {
+    public void onTabReselect(int position, View view) {
         Toast.makeText(mContext, "onTabReselect&position--->" + position, Toast.LENGTH_SHORT).show();
     }
 

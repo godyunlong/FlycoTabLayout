@@ -195,7 +195,7 @@ public class SegmentTabLayout extends FrameLayout implements ValueAnimator.Anima
     }
 
     /** 创建并添加tab */
-    private void addTab(final int position, View tabView) {
+    private void addTab(final int position, final View tabView) {
         TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
         tv_tab_title.setText(mTitles[position]);
 
@@ -206,11 +206,11 @@ public class SegmentTabLayout extends FrameLayout implements ValueAnimator.Anima
                 if (mCurrentTab != position) {
                     setCurrentTab(position);
                     if (mListener != null) {
-                        mListener.onTabSelect(position);
+                        mListener.onTabSelect(position,tabView);
                     }
                 } else {
                     if (mListener != null) {
-                        mListener.onTabReselect(position);
+                        mListener.onTabReselect(position,tabView);
                     }
                 }
             }
