@@ -37,72 +37,72 @@ import java.util.Collections;
 
 /** 滑动TabLayout,对于ViewPager的依赖性强 */
 public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
-    private Context mContext;
-    private ViewPager mViewPager;
-    private ArrayList<String> mTitles;
-    private LinearLayout mTabsContainer;
-    private int mCurrentTab;
-    private float mCurrentPositionOffset;
+    protected Context mContext;
+    protected ViewPager mViewPager;
+    protected ArrayList<String> mTitles;
+    protected LinearLayout mTabsContainer;
+    protected int mCurrentTab;
+    protected float mCurrentPositionOffset;
     protected int mTabCount;
     /** 用于绘制显示器 */
-    private Rect mIndicatorRect = new Rect();
+    protected Rect mIndicatorRect = new Rect();
     /** 用于实现滚动居中 */
-    private Rect mTabRect = new Rect();
-    private GradientDrawable mIndicatorDrawable = new GradientDrawable();
+    protected Rect mTabRect = new Rect();
+    protected GradientDrawable mIndicatorDrawable = new GradientDrawable();
 
-    private Paint mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mDividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mTrianglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Path mTrianglePath = new Path();
-    private static final int STYLE_NORMAL = 0;
-    private static final int STYLE_TRIANGLE = 1;
-    private static final int STYLE_BLOCK = 2;
-    private int mIndicatorStyle = STYLE_NORMAL;
+    protected Paint mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint mDividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint mTrianglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Path mTrianglePath = new Path();
+    protected static final int STYLE_NORMAL = 0;
+    protected static final int STYLE_TRIANGLE = 1;
+    protected static final int STYLE_BLOCK = 2;
+    protected int mIndicatorStyle = STYLE_NORMAL;
 
-    private float mTabPadding;
+    protected float mTabPadding;
     protected boolean mTabSpaceEqual;
-    private float mTabWidth;
+    protected float mTabWidth;
 
     /** indicator */
-    private int mIndicatorColor;
-    private float mIndicatorHeight;
-    private float mIndicatorWidth;
-    private float mIndicatorCornerRadius;
-    private float mIndicatorMarginLeft;
-    private float mIndicatorMarginTop;
-    private float mIndicatorMarginRight;
-    private float mIndicatorMarginBottom;
-    private int mIndicatorGravity;
-    private boolean mIndicatorWidthEqualTitle;
+    protected int mIndicatorColor;
+    protected float mIndicatorHeight;
+    protected float mIndicatorWidth;
+    protected float mIndicatorCornerRadius;
+    protected float mIndicatorMarginLeft;
+    protected float mIndicatorMarginTop;
+    protected float mIndicatorMarginRight;
+    protected float mIndicatorMarginBottom;
+    protected int mIndicatorGravity;
+    protected boolean mIndicatorWidthEqualTitle;
 
     /** underline */
-    private int mUnderlineColor;
-    private float mUnderlineHeight;
-    private int mUnderlineGravity;
-    private float mUnderlineRadius;
-    private float mUnderlineMarginLeft;
-    private float mUnderlineMarginRight;
+    protected int mUnderlineColor;
+    protected float mUnderlineHeight;
+    protected int mUnderlineGravity;
+    protected float mUnderlineRadius;
+    protected float mUnderlineMarginLeft;
+    protected float mUnderlineMarginRight;
 
 
     /** divider */
-    private int mDividerColor;
-    private float mDividerWidth;
-    private float mDividerPadding;
+    protected int mDividerColor;
+    protected float mDividerWidth;
+    protected float mDividerPadding;
 
     /** title */
-    private static final int TEXT_BOLD_NONE = 0;
-    private static final int TEXT_BOLD_WHEN_SELECT = 1;
-    private static final int TEXT_BOLD_BOTH = 2;
-    private float mTextSelectSize;
-    private float mTextUnSelectSize;
-    private int mTextSelectColor;
-    private int mTextUnselectColor;
-    private int mTextBold;
-    private boolean mTextAllCaps;
+    protected static final int TEXT_BOLD_NONE = 0;
+    protected static final int TEXT_BOLD_WHEN_SELECT = 1;
+    protected static final int TEXT_BOLD_BOTH = 2;
+    protected float mTextSelectSize;
+    protected float mTextUnSelectSize;
+    protected int mTextSelectColor;
+    protected int mTextUnselectColor;
+    protected int mTextBold;
+    protected boolean mTextAllCaps;
 
-    private int mLastScrollX;
-    private int mHeight;
-    private boolean mSnapOnTabClick;
+    protected int mLastScrollX;
+    protected int mHeight;
+    protected boolean mSnapOnTabClick;
 
     public SlidingTabLayout(Context context) {
         this(context, null, 0);
@@ -138,7 +138,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
     }
 
-    private void obtainAttributes(Context context, AttributeSet attrs) {
+    protected void obtainAttributes(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SlidingTabLayout);
 
         mIndicatorStyle = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_style, STYLE_NORMAL);
@@ -314,7 +314,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         return lp_tab;
     }
 
-    private void updateTabStyles() {
+    protected void updateTabStyles() {
         for (int i = 0; i < mTabCount; i++) {
             View v = mTabsContainer.getChildAt(i);
 //            v.setPadding((int) mTabPadding, v.getPaddingTop(), (int) mTabPadding, v.getPaddingBottom());
@@ -358,7 +358,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     }
 
     /** HorizontalScrollView滚到当前tab,并且居中显示 */
-    private void scrollToCurrentTab() {
+    protected void scrollToCurrentTab() {
         if (mTabCount <= 0) {
             return;
         }
@@ -384,7 +384,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
     }
 
-    private void updateTabSelection(int position) {
+    protected void updateTabSelection(int position) {
         for (int i = 0; i < mTabCount; ++i) {
             View tabView = mTabsContainer.getChildAt(i);
             final boolean isSelect = i == position;
@@ -400,9 +400,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
     }
 
-    private float margin;
+    protected float margin;
 
-    private void calcIndicatorRect() {
+    protected void calcIndicatorRect() {
         View currentTabView = mTabsContainer.getChildAt(this.mCurrentTab);
         float left = currentTabView.getLeft();
         float right = currentTabView.getRight();
@@ -785,8 +785,8 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     //setter and getter
 
     // show MsgTipView
-    private Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private SparseArray<Boolean> mInitSetMap = new SparseArray<>();
+    protected Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected SparseArray<Boolean> mInitSetMap = new SparseArray<>();
 
     /**
      * 显示未读消息
@@ -867,15 +867,15 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         return tipView;
     }
 
-    private OnTabSelectListener mListener;
+    protected OnTabSelectListener mListener;
 
     public void setOnTabSelectListener(OnTabSelectListener listener) {
         this.mListener = listener;
     }
 
     class InnerPagerAdapter extends FragmentPagerAdapter {
-        private ArrayList<Fragment> fragments = new ArrayList<>();
-        private String[] titles;
+        protected ArrayList<Fragment> fragments = new ArrayList<>();
+        protected String[] titles;
 
         public InnerPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String[] titles) {
             super(fm);
